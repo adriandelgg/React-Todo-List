@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-
-export class ToDos extends Component {
+class ToDos extends Component {
 	todoStyle = () => {
 		return {
 			display: 'flex',
@@ -9,18 +8,19 @@ export class ToDos extends Component {
 	};
 
 	handleRemove = event => {
-		this.props.onRemove(event.target.name);
-		console.log(event.target.name);
+		this.props.onRemove(event.target.parentNode.getAttribute('value'));
 	};
 
-	displayTodosList() {
-		let list = this.props.displayTodos;
-		console.log(list.length);
+	handleComplete = event => {
+		this.props.onComplete(event.target);
+	};
+
+	displayTodosList = () => {
 		let todos = this.props.displayTodos.map(todo => {
 			return (
-				<div style={this.todoStyle()}>
+				<div value={todo.id} style={this.todoStyle()}>
 					<p>{todo.text}</p>
-					<input type="checkbox"></input>
+					<input onClick={this.handleComplete} type="checkbox"></input>
 					<button
 						onClick={this.handleRemove}
 						style={{ background: 'red' }}
@@ -31,7 +31,7 @@ export class ToDos extends Component {
 			);
 		});
 		return todos;
-	}
+	};
 
 	render() {
 		return <>{this.displayTodosList()}</>;

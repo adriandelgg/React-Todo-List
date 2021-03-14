@@ -3,61 +3,62 @@ import './App.css';
 
 import CreateToDo from './CreateToDo';
 import ToDos from './ToDos';
-
 class App extends Component {
-   constructor(props) {
-      super(props);
-      this.state = {
-         todoList: [],
-      };
+	state = {
+		todoList: []
+	};
 
-      this.addNewTodo = this.addNewTodo.bind(this);
-      this.displayNewTodo = this.displayNewTodo.bind(this);
-      this.removeTodo = this.removeTodo.bind(this);
-   }
+	addNewTodo = text => {
+		let todoList = this.state.todoList;
+		let newTodo = { text, completed: false, id: Math.random() };
+		todoList.push(newTodo);
+		this.setState({
+			todoList
+		});
+	};
 
-   addNewTodo(text) {
-      let list = this.state.todoList;
-      let newTodo = { text: text, completed: false, id: list.length };
-      // console.log(newTodo);
-      list.push(newTodo);
-      this.setState({
-         todoList: list,
-      });
-   }
+	removeTodo = toRemove => {
+		let todoList = this.state.todoList.filter(todo => {
+			return todo.id !== Number(toRemove);
+		});
+		this.setState({
+			todoList
+		});
+	};
 
-   displayNewTodo(newTodo) {
-      // Probably not needed
-   }
+	completedTodo = checkBox => {
+		// Puts a line through text of the todo
+		if (checkBox.checked) {
+			// Working on changing only the selected checkbox
+			// let index = this.state.todoList.findIndex(num => {
+			// 	return num.id === Number(checkBox.parentNode.getAttribute('value'));
+			// });
+			// let newState = this.state.todoList.splice(index);
 
-   removeTodo(toRemove) {
-      let list = this.state.todoList;
-      let newTodos = list.filter(todo => {
-         return toRemove !== todo.id;
-      });
-      this.setState({
-         todoList: newTodos,
-      });
-   }
+			// console.log(newState);
 
-   completedTodo() {}
+			checkBox.parentNode.style.textDecoration = 'line-through';
+		} else {
+			checkBox.parentNode.style.textDecoration = '';
+		}
+	};
 
-   render() {
-      return (
-         <div className="todo-app">
-            <h1>React ToDo List</h1>
-            <CreateToDo
-               onNewTodo={this.addNewTodo}
-               displayTodos={this.state.todoList}
-            />
-            <ToDos
-               onComplete={this.completedTodo}
-               displayTodos={this.state.todoList}
-               onRemove={this.removeTodo}
-            />
-         </div>
-      );
-   }
+	render() {
+		return (
+			<div className="todo-app">
+				<h1>React ToDo List</h1>
+				<CreateToDo
+					onNewTodo={this.addNewTodo}
+					displayTodos={this.state.todoList}
+				/>
+				<ToDos
+					onComplete={this.completedTodo}
+					displayTodos={this.state.todoList}
+					onRemove={this.removeTodo}
+				/>
+			</div>
+		);
+	}
 }
 
 export default App;
