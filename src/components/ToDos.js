@@ -3,7 +3,9 @@ class ToDos extends Component {
 	todoStyle = () => {
 		return {
 			display: 'flex',
-			background: 'white'
+			textDecoration: this.props.displayTodos.completed
+				? 'line-through'
+				: 'none'
 		};
 	};
 
@@ -20,7 +22,10 @@ class ToDos extends Component {
 			return (
 				<div value={todo.id} style={this.todoStyle()}>
 					<p>{todo.text}</p>
-					<input onClick={this.handleComplete} type="checkbox"></input>
+					<input
+						onChange={this.props.onComplete.bind(this, todo.id)}
+						type="checkbox"
+					></input>
 					<button
 						onClick={this.handleRemove}
 						style={{ background: 'red' }}

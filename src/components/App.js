@@ -26,21 +26,42 @@ class App extends Component {
 		});
 	};
 
-	completedTodo = checkBox => {
-		// Puts a line through text of the todo
-		if (checkBox.checked) {
-			// Working on changing only the selected checkbox
-			// let index = this.state.todoList.findIndex(num => {
-			// 	return num.id === Number(checkBox.parentNode.getAttribute('value'));
-			// });
-			// let newState = this.state.todoList.splice(index);
+	// completedTodo = checkBox => {
+	// 	// Puts a line through text of the todo
+	// 	console.log(checkBox);
+	// 	let boxValue = checkBox.parentNode.getAttribute('value');
+	// 	if (checkBox.checked) {
+	// 		let todoList = this.state.todoList.map(todo => {
+	// 			if (todo.id === Number(boxValue)) {
+	// 				checkBox.parentNode.style.textDecoration = 'line-through';
+	// 			}
+	// 			return todo;
+	// 		});
+	// 		this.setState({
+	// 			todoList
+	// 		});
+	// 	} else {
+	// 		let todoList = this.state.todoList.map(todo => {
+	// 			if (todo.id === Number(boxValue)) {
+	// 				checkBox.parentNode.style.textDecoration = '';
+	// 			}
+	// 			return todo;
+	// 		});
+	// 		this.setState({
+	// 			todoList
+	// 		});
+	// 	}
+	// };
 
-			// console.log(newState);
-
-			checkBox.parentNode.style.textDecoration = 'line-through';
-		} else {
-			checkBox.parentNode.style.textDecoration = '';
-		}
+	completedTodo = id => {
+		this.setState({
+			todoList: this.state.todoList.map(todo => {
+				if (todo.id === id) {
+					todo.completed = !todo.completed;
+				}
+				return todo;
+			})
+		});
 	};
 
 	render() {
