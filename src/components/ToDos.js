@@ -23,7 +23,7 @@ class ToDos extends Component {
 				<div value={todo.id} style={this.todoStyle()}>
 					<p>{todo.text}</p>
 					<input
-						onChange={this.props.onComplete.bind(this, todo.id)}
+						onChange={() => this.props.onComplete(todo.id)}
 						type="checkbox"
 					></input>
 					<button
